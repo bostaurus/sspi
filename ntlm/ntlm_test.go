@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alexbrainman/sspi"
-	"github.com/alexbrainman/sspi/ntlm"
+	"github.com/bostaurus/sspi"
+	"github.com/bostaurus/sspi/ntlm"
 )
 
 var (
@@ -70,6 +70,11 @@ func testNTLM(t *testing.T, clientCred *sspi.Credentials) {
 	}
 
 	err = server.Update(token3)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	_, err = server.GetTokenUser()
 	if err != nil {
 		t.Fatal(err)
 	}

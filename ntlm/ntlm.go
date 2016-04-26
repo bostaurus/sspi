@@ -14,7 +14,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/alexbrainman/sspi"
+	"github.com/bostaurus/sspi"
 )
 
 // PackageInfo contains NTLM SSP package description.
@@ -246,4 +246,9 @@ func (c *ServerContext) ImpersonateUser() error {
 // user to what it was before ImpersonateUser was executed.
 func (c *ServerContext) RevertToSelf() error {
 	return c.sctxt.RevertToSelf()
+}
+
+// Get Tokenuser from the server context
+func (c *ServerContext) GetTokenUser() (*syscall.Tokenuser, error) {
+	return c.sctxt.GetTokenUser()
 }

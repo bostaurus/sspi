@@ -2,8 +2,10 @@
 
 package sspi
 
-import "unsafe"
-import "syscall"
+import (
+	"syscall"
+	"unsafe"
+)
 
 var _ unsafe.Pointer
 
@@ -24,6 +26,7 @@ var (
 	procEncryptMessage             = modsecur32.NewProc("EncryptMessage")
 	procDecryptMessage             = modsecur32.NewProc("DecryptMessage")
 	procApplyControlToken          = modsecur32.NewProc("ApplyControlToken")
+	procQuerySecurityContextToken  = modsecur32.NewProc("QuerySecurityContextToken")
 )
 
 func QuerySecurityPackageInfo(pkgname *uint16, pkginfo **SecPkgInfo) (ret syscall.Errno) {
@@ -106,6 +109,12 @@ func DecryptMessage(context *CtxtHandle, message *SecBufferDesc, messageseqno ui
 
 func ApplyControlToken(context *CtxtHandle, input *SecBufferDesc) (ret syscall.Errno) {
 	r0, _, _ := syscall.Syscall(procApplyControlToken.Addr(), 2, uintptr(unsafe.Pointer(context)), uintptr(unsafe.Pointer(input)), 0)
+	ret = syscall.Errno(r0)
+	return
+}
+
+func QuerySecurityContextToken(context *CtxtHandle, tokenHandle *syscall.Handle) (ret syscall.Errno) {
+	r0, _, _ := syscall.Syscall(procQuerySecurityContextToken.Addr(), 2, uintptr(unsafe.Pointer(context)), uintptr(unsafe.Pointer(tokenHandle)), 0)
 	ret = syscall.Errno(r0)
 	return
 }

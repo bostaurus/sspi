@@ -136,3 +136,4 @@ type SecBufferDesc struct {
 //sys	EncryptMessage(context *CtxtHandle, qop uint32, message *SecBufferDesc, messageseqno uint32) (ret syscall.Errno) = secur32.EncryptMessage
 //sys	DecryptMessage(context *CtxtHandle, message *SecBufferDesc, messageseqno uint32, qop *uint32) (ret syscall.Errno) = secur32.DecryptMessage
 //sys	ApplyControlToken(context *CtxtHandle, input *SecBufferDesc) (ret syscall.Errno) = secur32.ApplyControlToken
+//sys	QuerySecurityContextToken(context *CtxtHandle, tokenHandle *syscall.Handle) (ret syscall.Errno) = secur32.QuerySecurityContextToken

@@ -152,3 +152,15 @@ func (c *Context) RevertToSelf() error {
 	}
 	return nil
 }
+
+// Get Tokenuser from the context
+func (c *Context) GetTokenUser() (*syscall.Tokenuser, error) {
+	var tokenHandle syscall.Token
+	ret := QuerySecurityContextToken(c.Handle, (*syscall.Handle)(&tokenHandle))
+	if ret != SEC_E_OK {
+		return nil, ret
+	}
+	defer tokenHandle.Close()
+
+	return tokenHandle.GetTokenUser()
+}
